@@ -2,14 +2,23 @@
   <record id="view_pos_config_form_inherit_lots" model="ir.ui.view">
     <field name="name">pos.config.form.inherit.lots</field>
     <field name="model">pos.config</field>
-    <field name="inherit_id" ref="point_of_sale.view_pos_config_form"/>
+    <!-- En Odoo 17 el ID correcto del formulario de POS config es este -->
+    <field name="inherit_id" ref="point_of_sale.pos_config_view_form"/>
     <field name="arch" type="xml">
+      <!-- Inserta la pestaña solo si existe un notebook -->
       <xpath expr="//form//sheet//notebook" position="inside">
         <page string="Lotes (Fix)">
           <group>
             <field name="pos_lot_force_selection"/>
           </group>
         </page>
+      </xpath>
+
+      <!-- Si no hay notebook, agrega el campo dentro del sheet -->
+      <xpath expr="//form//sheet[not(.//notebook)]" position="inside">
+        <group string="Lotes (Fix)">
+          <field name="pos_lot_force_selection"/>
+        </group>
       </xpath>
     </field>
   </record>
